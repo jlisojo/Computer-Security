@@ -13,13 +13,16 @@ import java.util.Random;
 import java.util.Scanner;
 
 
-public class Encryption 
+public class Encryptor 
 {
-	public static void main(String[] args) 
+	// fields
+	private static Random randnum;
+	
+	// default constructor 
+	public Encryptor()
 	{
-		String msg = getMessageFromFile();
-		String emsg = encryptMessage(msg);
-		writeMessageToFile(emsg);				
+		randnum  = new Random();
+		randnum.setSeed(23);
 	}
 	
 	//////////////////////////////////////////////////
@@ -48,7 +51,7 @@ public class Encryption
 	//////////////////////////////////////////////////
 	// read the message from the file 
 	//////////////////////////////////////////////////
-	public static String getMessageFromFile()
+	public String getMessageFromFile()
 	{
 		String filename = "message.txt";
 		String message = "";
@@ -77,7 +80,7 @@ public class Encryption
 	//////////////////////////////////////////////////
 	// write message to the file 
 	//////////////////////////////////////////////////
-	public static void writeMessageToFile(String message)
+	public void writeMessageToFile(String message)
 	{
 		String filename = "toyou.txt";
 		
@@ -99,17 +102,17 @@ public class Encryption
 	//////////////////////////////////////////////////
 	// encrypt the message
 	//////////////////////////////////////////////////
-	public static String encryptMessage(String message)
+	public String encryptMessage(String message)
 	{
 		System.out.println("Before Encryption: " + message);
-		byte bite = (byte) random();
+		//byte bite = (byte) random();
 		//showBinary(message);
 		
 		int XORresult;
 		String encryptedMessage = "";
 		for (int i = 0; i < message.length(); i++)
 		{
-			XORresult = (int) (message.charAt(i) ^ bite);
+			XORresult = (int) (message.charAt(i) ^ random());
 			encryptedMessage += (char) XORresult;
 		}
 		
@@ -122,17 +125,24 @@ public class Encryption
 	//////////////////////////////////////////////////
 	// generate a random number with my seed 
 	//////////////////////////////////////////////////
-	public static int random()
-	{
-	    Random randnum = new Random();
-	    byte[] b = new byte[1];
-	    
-	    randnum.setSeed(23);
+	public int random()
+	{	    
+	    byte[] b = new byte[1];	    
 	    
 	    randnum.nextBytes(b);
 	    
 	    byte x = b[0];
-	    
+	    System.out.println("returning x = " + x);
 	    return x;
 	}	
+	
+	// main method 
+	public static void main(String[] args) 
+	{
+		Encryptor encryptor = new Encryptor();
+		
+		String msg = encryptor.getMessageFromFile();
+		String emsg = encryptor.encryptMessage(msg);
+		encryptor.writeMessageToFile(emsg);				
+	}
 }
