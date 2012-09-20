@@ -5,19 +5,22 @@ import java.util.Random;
 import java.util.Scanner;
 
 
-public class Decryption 
+public class Decryptor
 {
-	public static void main(String[] args) 
+	// fields
+	private static Random randNum;
+	
+	// default constructor 
+	public Decryptor()
 	{
-		String emsg = getMessageFromFile();
-		String msg = decryptMessage(emsg);
-		writeMessageToFile(msg);
+		randNum  = new Random();
+		randNum.setSeed(23);
 	}
 
 	//////////////////////////////////////////////////
 	// show a string as binary (used for debugging) 
 	//////////////////////////////////////////////////	
-	public static void showBinary(String s)
+	public void showBinary(String s)
 	{
 		byte[] bytes = s.getBytes();
 		StringBuilder binary = new StringBuilder();
@@ -40,7 +43,7 @@ public class Decryption
 	//////////////////////////////////////////////////
 	// read the message from the file 
 	//////////////////////////////////////////////////
-	public static String getMessageFromFile()
+	public String getMessageFromFile()
 	{
 		String filename = "toyou.txt";
 		String message = "";
@@ -69,7 +72,7 @@ public class Decryption
 	//////////////////////////////////////////////////
 	// write message to the file 
 	//////////////////////////////////////////////////
-	public static void writeMessageToFile(String message)
+	public void writeMessageToFile(String message)
 	{
 		String filename = "toyou.txt";
 		
@@ -91,17 +94,17 @@ public class Decryption
 	//////////////////////////////////////////////////
 	// decrypt the message
 	//////////////////////////////////////////////////
-	public static String decryptMessage(String message)
+	public String decryptMessage(String message)
 	{
 		System.out.println("Before Decryption: " + message);
-		byte bite = (byte) random();
+		//byte bite = (byte) random();
 		//showBinary(message);
 		
 		int XORresult;
 		String encryptedMessage = "";
 		for (int i = 0; i < message.length(); i++)
 		{
-			XORresult = (int) (message.charAt(i) ^ bite);
+			XORresult = (int) (message.charAt(i) ^ random());
 			encryptedMessage += (char) XORresult;
 		}
 		
@@ -114,17 +117,21 @@ public class Decryption
 	//////////////////////////////////////////////////
 	// generate a random number with my seed 
 	//////////////////////////////////////////////////
-	public static int random()
+	public int random()
 	{
-	    Random randnum = new Random();
-	    byte[] b = new byte[1];
 	    
-	    randnum.setSeed(23);
-	    
-	    randnum.nextBytes(b);
-	    
-	    byte x = b[0];
-	    
+//	    byte[] b = new byte[1];		    
+//	    randnum.nextBytes(b);	    
+//	    byte x = b[0];
+		int x = randNum.nextInt(255);
 	    return x;
+	}
+	
+	public static void main(String[] args) 
+	{
+		Decryptor decryptor = new Decryptor();
+		String emsg = decryptor.getMessageFromFile();
+		String msg = decryptor.decryptMessage(emsg);
+		decryptor.writeMessageToFile(msg);
 	}
 }

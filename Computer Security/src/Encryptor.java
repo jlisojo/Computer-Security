@@ -16,13 +16,13 @@ import java.util.Scanner;
 public class Encryptor 
 {
 	// fields
-	private static Random randnum;
+	private static Random randNum;
 	
 	// default constructor 
 	public Encryptor()
 	{
-		randnum  = new Random();
-		randnum.setSeed(23);
+		randNum  = new Random();
+		randNum.setSeed(23);
 	}
 	
 	//////////////////////////////////////////////////
@@ -127,11 +127,12 @@ public class Encryptor
 	//////////////////////////////////////////////////
 	public int random()
 	{	    
-	    byte[] b = new byte[1];	    
+//	    byte[] b = new byte[1];	 	    
+//	    randnum.nextBytes(b);	    
+//	    byte x = b[0];
+		
+		int x = randNum.nextInt(255);
 	    
-	    randnum.nextBytes(b);
-	    
-	    byte x = b[0];
 	    System.out.println("returning x = " + x);
 	    return x;
 	}	
