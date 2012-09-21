@@ -14,7 +14,7 @@ public class Decryptor
 	public Decryptor()
 	{
 		randNum  = new Random();
-		randNum.setSeed(23);
+		randNum.setSeed(7);
 	}
 
 	//////////////////////////////////////////////////
@@ -96,9 +96,7 @@ public class Decryptor
 	//////////////////////////////////////////////////
 	public String decryptMessage(String message)
 	{
-		System.out.println("Before Decryption: " + message);
-		//byte bite = (byte) random();
-		//showBinary(message);
+		//System.out.println("Before Decryption: " + message);
 		
 		int XORresult;
 		String encryptedMessage = "";
@@ -108,8 +106,7 @@ public class Decryptor
 			encryptedMessage += (char) XORresult;
 		}
 		
-		//showBinary(encryptedMessage);
-		System.out.println("After Decryption: " + encryptedMessage);
+		//System.out.println("After Decryption: " + encryptedMessage);
 		
 		return encryptedMessage;
 	}	
@@ -117,21 +114,21 @@ public class Decryptor
 	//////////////////////////////////////////////////
 	// generate a random number with my seed 
 	//////////////////////////////////////////////////
-	public int random()
+	public byte random()
 	{
-	    
-//	    byte[] b = new byte[1];		    
-//	    randnum.nextBytes(b);	    
-//	    byte x = b[0];
-		int x = randNum.nextInt(255);
-	    return x;
+		int x = randNum.nextInt(127);
+	    return (byte) x;
 	}
-	
+
+	//////////////////////////////////////////////////
+	// MAIN
+	//////////////////////////////////////////////////	
 	public static void main(String[] args) 
 	{
 		Decryptor decryptor = new Decryptor();
 		String emsg = decryptor.getMessageFromFile();
 		String msg = decryptor.decryptMessage(emsg);
 		decryptor.writeMessageToFile(msg);
+		System.out.println("Message Decrypted! View it in the file: toyou.txt");
 	}
 }

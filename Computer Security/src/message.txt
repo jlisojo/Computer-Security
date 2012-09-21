@@ -1,1 +1,3 @@
-HELLO JOSH
+Hello Joshua,
+Have a nice day!
+Bye.

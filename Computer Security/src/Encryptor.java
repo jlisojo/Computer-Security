@@ -22,7 +22,7 @@ public class Encryptor
 	public Encryptor()
 	{
 		randNum  = new Random();
-		randNum.setSeed(23);
+		randNum.setSeed(7);
 	}
 	
 	//////////////////////////////////////////////////
@@ -64,6 +64,11 @@ public class Encryptor
             while(inputFile.hasNext())
             {
             	message += inputFile.nextLine();
+            	
+            	if(inputFile.hasNext())
+            	{
+            		message += "\n";
+            	}
             }
                                     
             // Close the file.
@@ -104,10 +109,8 @@ public class Encryptor
 	//////////////////////////////////////////////////
 	public String encryptMessage(String message)
 	{
-		System.out.println("Before Encryption: " + message);
-		//byte bite = (byte) random();
-		//showBinary(message);
-		
+		//System.out.println("Before Encryption: " + message);
+				
 		int XORresult;
 		String encryptedMessage = "";
 		for (int i = 0; i < message.length(); i++)
@@ -116,8 +119,7 @@ public class Encryptor
 			encryptedMessage += (char) XORresult;
 		}
 		
-		//showBinary(encryptedMessage);
-		System.out.println("After Encryption: " + encryptedMessage);
+		//System.out.println("\nAfter Encryption: " + encryptedMessage);
 		
 		return encryptedMessage;
 	}
@@ -125,19 +127,16 @@ public class Encryptor
 	//////////////////////////////////////////////////
 	// generate a random number with my seed 
 	//////////////////////////////////////////////////
-	public int random()
-	{	    
-//	    byte[] b = new byte[1];	 	    
-//	    randnum.nextBytes(b);	    
-//	    byte x = b[0];
-		
-		int x = randNum.nextInt(255);
+	public byte random()
+	{	
+		int x = randNum.nextInt(127);
 	    
-	    System.out.println("returning x = " + x);
-	    return x;
+	    return (byte) x;
 	}	
 	
-	// main method 
+	//////////////////////////////////////////////////
+	// MAIN
+	//////////////////////////////////////////////////
 	public static void main(String[] args) 
 	{
 		Encryptor encryptor = new Encryptor();
@@ -145,5 +144,6 @@ public class Encryptor
 		String msg = encryptor.getMessageFromFile();
 		String emsg = encryptor.encryptMessage(msg);
 		encryptor.writeMessageToFile(emsg);				
+		System.out.println("Message Encrypted!");
 	}
 }
